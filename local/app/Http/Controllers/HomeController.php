@@ -22,11 +22,13 @@ class HomeController extends Controller
         //Tin tức mới nhất (1)
         $newsone = DB::table('news')
         ->join('category','news.category_id','category.category_id')
+        ->where('news_del', 1)
         ->limit(1)
         ->get();
 
         //Tin tức mới nhất
         $new = DB::table('news')
+        ->where('news_del', 1)
         ->join('category','news.category_id','category.category_id')
         ->where('news_active','1')
         ->orderByDesc('news_datecreate')
@@ -35,6 +37,7 @@ class HomeController extends Controller
 
         //Tin tức đáng chú ý
         $newsview = DB::table('news')
+        ->where('news_del', 1)
         ->join('category','news.category_id','category.category_id')
         ->where('news_active','1')
         ->orderByDesc('news_view')
@@ -43,6 +46,7 @@ class HomeController extends Controller
 
         //Tin tức hot view
         $newshotview = DB::table('news')
+        ->where('news_del', 1)
         ->join('category','news.category_id','category.category_id')
         ->where('news_active','1')
         ->orderByDesc('news_view')
@@ -51,6 +55,7 @@ class HomeController extends Controller
 
         //Tin tức hot like
         $newshotlike = DB::table('news')
+        ->where('news_del', 1)
         ->join('category','news.category_id','category.category_id')
         ->where('news_active','1')
         ->orderByDesc('news_like')
@@ -59,6 +64,7 @@ class HomeController extends Controller
 
         //Tin tức moi the gioi
         $newstg = DB::table('news')
+        ->where('news_del', 1)
         ->where('news_active','1')
         ->where('category_id','15')
         ->orderByDesc('news_datecreate')
@@ -67,6 +73,7 @@ class HomeController extends Controller
 
         //Tin tức the thao
         $newstt = DB::table('news')
+        ->where('news_del', 1)
         ->where('news_active','1')
         ->where('category_id','19')
         ->orderByDesc('news_datecreate')
@@ -75,6 +82,7 @@ class HomeController extends Controller
 
         //Tin tức suc khoe
         $newssk = DB::table('news')
+        ->where('news_del', 1)
         ->where('news_active','1')
         ->where('category_id','18')
         ->orderByDesc('news_datecreate')
@@ -83,6 +91,7 @@ class HomeController extends Controller
 
         //Tin tức cong nghiep
         $newscn = DB::table('news')
+        ->where('news_del', 1)
         ->where('news_active','1')
         ->where('category_id','17')
         ->orderByDesc('news_datecreate')

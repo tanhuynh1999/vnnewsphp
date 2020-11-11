@@ -37,7 +37,22 @@ class UserConttroller extends Controller
     }
     public function PostLogin(AddUserRequest $request)
     {
-        return view();
+        $check = DB::table('users')->where('user_email',$request->user_email)
+        ->where('user_pass',$request->user_pass)->first();
+        if($check)
+        {
+
+            $view = DB::table('users')->where('user_email',$request->user_email)->get();
+            foreach ($view as $key => $view) {
+              session()->put('user_email',$view->user_email);
+              session()->put('user_name',$view->user_name);
+              session()->put('user_avatar',$view->user_image);
+            }
+            return Redirect::to('/');
+        }
+        else{
+            return Redirect::to('/');
+        }
     }
 
     public function GetLogin($social)
@@ -46,7 +61,7 @@ class UserConttroller extends Controller
     }
 
     public function CheckLogin($social)
-    {   
+    {
         $info = Socialite::driver($social)->user();
         dd($info);
     }
@@ -62,7 +77,7 @@ class UserConttroller extends Controller
         ->orderByDesc('news_datecreate')
         ->limit(12)
         ->get();
-        
+
         return view('user.reg')
         ->with('category',$cate)
         ->with('new',$new);
@@ -82,7 +97,7 @@ class UserConttroller extends Controller
         $data['user_datelogin'] = $now;
 
         $data['user_role'] = 1;
-       
+
         DB::table('users')->insert($data);
         return Redirect::to('/');
     }
@@ -100,6 +115,15 @@ class UserConttroller extends Controller
         if($check)
         {
             //ses
+            $data = array();
+
+            //date
+            $date = new Carbon();
+            $now = Carbon::now();
+            
+            $data['user_datelogin'] = $now;
+
+            DB::table('users')->insert($data);
 
             session()->put('user_name',$user->name);
             session()->put('user_avatar',$user->avatar);
@@ -112,9 +136,18 @@ class UserConttroller extends Controller
             $data['user_email'] = $user->email;
             $data['user_name'] = $user->name;
             $data['user_image'] = $user->avatar;
-    
+
+            //date
+            $date = new Carbon();
+            $now = Carbon::now();
+
+            $data['user_datecreate'] = $now;
+            $data['user_datelogin'] = $now;
+
+            $data['user_role'] = 1;
+
             DB::table('users')->insert($data);
-            
+
             //ses
             session()->put('user_name',$user->name);
             session()->put('user_avatar',$user->avatar);
@@ -122,7 +155,7 @@ class UserConttroller extends Controller
 
             return Redirect::to('/');
         }
-        
+
     }
 
     // dang xuat
@@ -138,7 +171,13 @@ class UserConttroller extends Controller
         $data = array();
 
         $data['user_id'] = $request->user_id;
-        $data['news_id'] = $request->news_id; 
+        $data['news_id'] = $request->news_id;
+
+        //date
+        $date = new Carbon();
+        $now = Carbon::now();
+
+        $data['favourite_datecreate'] = $now;
 
         DB::table('favourite')->insert($data);
         return Redirect::to('/detailnews-' .$request->news_id);
@@ -150,5 +189,60 @@ class UserConttroller extends Controller
         DB::table('favourite')->where('favourite_id', $request->favourite_id)->delete();
 
         return Redirect::to('/detailnews-'.$request->news_id);
+    }
+    //huy yeu thich
+    public function cancelFavouriteID(AddUserRequest $request)
+    {
+        DB::table('favourite')->where('favourite_id', $request->favourite_id)->delete();
+        return Redirect::to('/all-favourite');
+    }
+
+    //like
+    public function like(AddUserRequest $request)
+    {
+        $data = array();
+
+        $data['user_id'] = $request->user_id;
+        $data['news_id'] = $request->news_id;
+
+        //date
+        $date = new Carbon();
+        $now = Carbon::now();
+
+        $data['like_datecreate'] = $now;
+
+        DB::table('likes')->insert($data);
+        return Redirect::to('/detailnews-' .$request->news_id);
+    }
+    //Huy thich
+    public function cancelLike(AddUserRequest $request)
+    {
+
+        DB::table('likes')->where('like_id', $request->like_id)->delete();
+
+        return Redirect::to('/detailnews-'.$request->news_id);
+    }
+    //binh luan ses
+    public function commentID(AddUserRequest $request)
+    {
+        $data = array();
+        $data['news_id'] = $request->news_id;
+        $data['user_id'] = session('user_email');
+
+        //date
+        $date = new Carbon();
+        $now = Carbon::now();
+
+        $data['comment_datecreate'] = $now;
+        $data['comment_dateupdate'] = $now;
+
+        $data['comment_active'] = true;
+
+        $data["comment_content"] = $request->comment_content;
+
+
+        DB::table('comment')->insert($data);
+
+        return Redirect::to('/detailnews-' .$request->news_id);
     }
 }

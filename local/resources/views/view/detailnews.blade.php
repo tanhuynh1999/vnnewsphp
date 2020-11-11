@@ -7,18 +7,18 @@
 	<div class="container page-wrapper">
 		<a href="/vnnews">Trang chủ</a> / {{$detail->category_name}} /<span class="breadcrumb_last" aria-current="page">{{$detail->news_name}}</span>
 	</div>
-</nav>    
+</nav>
 <div class="w3l-searchblock w3l-homeblock1 py-5">
     <div class="container py-lg-4 py-md-3">
         <!-- block -->
         <div class="row">
             <div class="col-lg-8 most-recent">
                 <h3 class="section-title-left">{{$detail->news_name}}</h3>
-               
+
                 <div class="row">
                     <div class="col-md-12 item">
                         <i class="fa fa-eye text-primary">&nbsp;</i>{{$detail->news_view}} lượt xem
-                        <i class="fa fa-heart text-danger">&nbsp;</i>{{$detail->news_like}} lượt thích
+                        <i class="fa fa-heart text-danger">&nbsp;</i>{{session('countlike')}} lượt thích
                         <div class="card mt-3">
                             <div class="card-header p-0 position-relative">
                                 <a href="#blog-single">
@@ -50,6 +50,182 @@
                             </div>
                         </div>
                     </div>
+										<div class="col-lg-12">
+											<section class="blog-post-main w3l-homeblock1">
+											    <!--/blog-post-->
+											    <div class="blog-content-inf pb-5">
+											        <div class="">
+											            <div class="single-post-content">
+											                <div class="comments mt-5">
+											                   <h4 class="side-title ">Bình luận ({{session('countcomment')}})</h4>
+											                   @if(session('countcomment') == 0)
+																				 		<h5>Hãy là người bình luận đầu tiên {{session('user_name')}} nhé</h5>
+																				 @else
+																						 @foreach($comment as $key => $comment)
+																							 <div class="media mt-4">
+																									<div class="img-circle">
+																											@if($comment->user_image == null)
+																													<img src="./assets/images/nennen.png" class="img-fluid" alt="...">
+																											@else
+																													<img src="{{$comment->user_image}}" class="img-fluid" alt="...">
+																											@endif
+																									</div>
+																									<div class="media-body">
+
+																											<ul class="time-rply mb-2">
+																													<li>
+																															<a href="#URL" class="name mt-0 mb-2 d-block">{{$comment->user_name}}</a>
+																															Cập nhật lúc: {{$comment->comment_dateupdate}}
+
+																													</li>
+																													@if($comment->user_email == session('user_email'))
+																															<li class="reply-last">
+																																	<a href="#reply" class="reply">
+																																			<i class="edit icon"></i>Sửa
+																																	</a>
+																																	<a href="#reply" class="reply  text-danger">
+																																			<i class="trash icon"></i>Xóa
+																																	</a>
+																															</li>
+																													@else
+																															<li class="reply-last">
+																																	<a href="#reply" class="reply">
+																																			Trả lời
+																																	</a>
+																															</li>
+																													@endif
+																											</ul>
+																											<p>
+																												{{$comment->comment_content}}
+																											</p>
+																									</div>
+																							</div>
+																						 @endforeach
+																				 @endif
+
+											                    <div class="media">
+											                        <div class="img-circle">
+											                            <img src="assets/images/c2.jpg" class="img-fluid" alt="...">
+											                        </div>
+											                        <div class="media-body">
+											                            <ul class="time-rply mb-2">
+											                                <li>
+											                                    <a href="#URL" class="name mt-0 mb-2 d-block">James Harper</a>
+
+
+											                                </li>
+											                                <li class="reply-last">
+											                                    <a href="#reply" class="reply">
+											                                        Reply
+											                                    </a>
+											                                </li>
+											                            </ul>
+											                            <p>
+											                                Lorem ipsum dolor, sit amet consectetur adipisicing. Ea consequuntur illum facere aperiam sequi optio consectetur adipisicing elitFuga,
+											                                suscipit totam animi.....
+											                            </p>
+											                            <div class="media second mt-4 p-0 pt-2">
+											                                <a class="img-circle img-circle-sm" href="#url">
+											                                    <img src="assets/images/c3.jpg" class="img-fluid" alt="...">
+											                                </a>
+											                                <div class="media-body">
+											                                    <ul class="time-rply mb-2">
+											                                        <li>
+											                                            <a href="#URL" class="name mt-0 mb-2 d-block">Jackson Wyatt</a>
+											                                            April 15th, 2020 - 14:20 pm
+
+											                                        </li>
+											                                        <li class="reply-last">
+											                                            <a href="#reply" class="reply"> Reply</a>
+											                                        </li>
+											                                    </ul>
+											                                    <p>
+											                                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+											                                        corrupti quos dolores et. Lorem ipsum dolor sit amet......
+											                                    </p>
+											                                </div>
+											                            </div>
+											                        </div>
+											                    </div>
+											                </div>
+
+											                <div class="leave-comment-form mt-5" id="reply">
+											                    <h4 class="side-title mb-2">Ý kiến</h4>
+											                    <p class="mb-4">
+											                        Hãy để lại ý kiến cho tin tức "{{$detail->news_name}}" *
+											                    </p>
+											                    <form action="{{URL::to('/comment-id')}}" method="post">
+																						{{csrf_field()}}
+											                        <div class="form-group">
+																									<input type="hidden" name="news_id" value="{{$detail->news_id}}" />
+											                            <textarea name="comment_content" class="form-control" placeholder="Ý kiến của bạn*" required=""
+											                                      spellcheck="false"></textarea>
+											                        </div>
+
+											                        <div class="submit text-right">
+											                            <button class="btn btn-style btn-primary">Gửi </button>
+											                        </div>
+											                    </form>
+											                </div>
+
+											                <!-- related posts -->
+											                <div class="item mt-5 pt-lg-5">
+											                    <h3 class="section-title-left">Maybe You are Interested in </h3>
+											                    <div class="row">
+											                        <div class="col-md-6">
+											                            <div class="list-view list-view1">
+											                                <div class="grids5-info">
+											                                    <a href="blog-single.html" class="d-block zoom"><img src="assets/images/4.jpg" alt="" class="img-fluid radius-image news-image"></a>
+											                                    <div class="blog-info align-self">
+											                                        <a href="blog-single.html" class="blog-desc1">
+											                                            Edit/proofread your post, and fix your formatting.
+											                                        </a>
+											                                        <div class="author align-items-center mt-3 mb-1">
+											                                            <a href="author.html">Johnson smith</a> in <a href="#url">Design</a>
+											                                        </div>
+											                                        <ul class="blog-meta">
+											                                            <li class="meta-item blog-lesson">
+											                                                <span class="meta-value"> April 13, 2020 </span>
+											                                            </li>
+											                                            <li class="meta-item blog-students">
+											                                                <span class="meta-value"> 6min read</span>
+											                                            </li>
+											                                        </ul>
+											                                    </div>
+											                                </div>
+											                            </div>
+											                        </div>
+
+											                        <div class="col-md-6 mt-md-0 mt-5">
+											                            <div class="list-view list-view1">
+											                                <div class="grids5-info">
+											                                    <a href="blog-single.html" class="d-block zoom"><img src="assets/images/6.jpg" alt="" class="img-fluid radius-image news-image"></a>
+											                                    <div class="blog-info align-self">
+											                                        <a href="blog-single.html" class="blog-desc1">How to Create your blog domain to make it live</a>
+											                                        <div class="author align-items-center mt-3 mb-1">
+											                                            <a href="author.html">Johnson smith</a> in <a href="#url">Design</a>
+											                                        </div>
+											                                        <ul class="blog-meta">
+											                                            <li class="meta-item blog-lesson">
+											                                                <span class="meta-value"> April 13, 2020 </span>
+											                                            </li>
+											                                            <li class="meta-item blog-students">
+											                                                <span class="meta-value"> 6min read</span>
+											                                            </li>
+											                                        </ul>
+											                                    </div>
+											                                </div>
+											                            </div>
+											                        </div>
+											                    </div>
+											                </div>
+											                <!-- //related posts -->
+											            </div>
+											         </div>
+										        </div>
+										        <!--//blog-post-->
+											</section>
+										</div>
                     <div class="col-lg-6 col-md-6 item mt-5 pt-lg-3">
                         <div class="card">
                             <div class="card-header p-0 position-relative">
@@ -176,20 +352,35 @@
                     @if(session('user_email') == true)
                         <div class="row">
                             <div class="col-lg-4" style="padding: 5px;">
-                                <button class="ui circular icon button w-100">
-                                    <i class="thumbs up icon"></i>
-                                    <b>
-                                        <?php
-                                            echo session('countfa');
-                                        ?>
-                                    </b>
-                                </button>
+                                @if(session('countlike') != null)
+																		@foreach ($like as $key => $like)
+																			<form action="{{URL::to('/cancel-like')}}" method="post" role="form">
+																					<button class="ui circular icon button w-100 like" >
+																							{{csrf_field()}}
+																							<input type="hidden" name="like_id" value="{{$like->like_id}}" />
+																							<input type="hidden" name="news_id" value="{{$detail->news_id}}" />
+																							<i class="thumbs up icon" style="color: rgb(28, 18, 107)"></i>
+																							<span style="color: rgb(28, 18, 107)">{{session('countlikeall')}}</span>
+																					</button>
+																			</form>
+																		@endforeach
+																@else
+																		<form action="{{URL::to('/like')}}" method="post" role="form">
+																				<button class="ui circular icon button w-100 like">
+																						{{csrf_field()}}
+																						<input type="hidden" name="user_id" value="{{session('user_email')}}"/>
+																						<input type="hidden" name="news_id" value="{{$detail->news_id}}" />
+																						<i class="thumbs up icon"></i>
+																						{{session('countlikeall')}}
+																				</button>
+																		</form>
+                                @endif
                             </div>
                             <div class="col-lg-4" style="padding: 5px;">
                                 <button class="ui circular icon button w-100">
-                                    <i class="thumbs down icon"></i>
-                                    <b>0</b>
-                                </button>   
+                                    <i class="exclamation icon"></i>
+                                     Báo cáo
+                                </button>
                             </div>
                             <div class="col-lg-4" style="padding: 5px;">
                                 @if(session('countfa') != 0)
@@ -205,7 +396,7 @@
                                         </form>
                                     @endforeach
                                 @else
-                                    <form action="{{URL::to('/favourite')}}" method="post" role="form">
+                                    <form action="{{URL::to('/favourite')}}" method="post" role="form" id="fa">
                                         {{csrf_field()}}
                                         <button class="ui circular icon button w-100" type="submit">
                                             <input type="hidden" name="user_id" value="{{session('user_email')}}"/>
@@ -214,13 +405,16 @@
                                             <b>Yêu thích</b>
                                         </button>
                                     </form>
+																		<script>
+
+																		</script>
                                 @endif
                             </div>
                         </div>
 
                         <button class="ui circular icon button mt-3" style="width: 200px;">
                             <i class="chat icon"></i>
-                            <b>0 bình luận</b>
+                            <b>({{session('countcomment')}}) bình luận</b>
                         </button>
                         <button class="ui circular icon button mt-3" style="width: 100px;">
                             <i class="share icon"></i>
@@ -231,17 +425,17 @@
                             <i class="thumbs up icon"></i>
                             <b>0</b>
                         </button>
-                        <button class="ui circular icon button" style="width: 100px;" data-toggle="modal" data-target="#login">
-                            <i class="thumbs down icon"></i>
-                            <b>0</b>
-                        </button>
+												<button class="ui circular icon button">
+														<i class="exclamation icon"></i>
+														 Báo cáo
+												</button>
                         <button class="ui circular icon button" style="width: 100px;" data-toggle="modal" data-target="#login">
                             <i class="like icon"></i>
                             <b>Yêu thích</b>
                         </button>
                         <button class="ui circular icon button mt-3" style="width: 200px;">
                             <i class="chat icon"></i>
-                            <b>0 bình luận</b>
+                            <b>({{session('countcomment')}}) bình luận</b>
                         </button>
                         <button class="ui circular icon button mt-3" style="width: 100px;">
                             <i class="share icon"></i>
@@ -352,16 +546,16 @@
                             <h4 class="text-danger text-center">Đăng nhập bằng email</h3>
                             <form class="ui form" role="form" method="post" action="{{URL::to('/loginpost')}}">
                                 {{csrf_field()}}
-                                <div class="field"> <label>Email</label> 
-                                    <input class="form-control" type="text" name="user_email" placeholder="Nhập email vnnews"> 
+                                <div class="field"> <label>Email
+                                    <input class="form-control" type="text" name="user_email" placeholder="Nhập email vnnews">
                                 </div>
-                                <div class="field"> <label>Mật khẩu</label> 
-                                    <input class="" type="text" name="user_pass" placeholder="Nhập mật khẩu vnnews"> 
+                                <div class="field"> <label>Mật khẩu</label>
+                                    <input class="" type="password" name="user_pass" placeholder="Nhập mật khẩu vnnews">
                                 </div>
                                 <div class="row px-3 mb-4">
                                     <div class="custom-control custom-checkbox custom-control-inline"> <input id="chk1" type="checkbox" name="chk" class="custom-control-input"> <label for="chk1" class="custom-control-label text-sm">Nhớ mật khẩu</label> </div> <a href="#" class="ml-auto mb-0 text-sm">Quên mật khẩu?</a>
                                 </div>
-                                
+
                                 <div class="row mb-3 px-3"> <button type="submit" class="ui primary submit button w-100">Đăng nhập</button> </div>
                                 <div class="ui error message"></div>
                             </form>
@@ -417,21 +611,21 @@
                             <h4 class="text-danger text-center">Đăng ký bằng email</h3>
                             <form class="ui form" role="form" method="post" action="{{URL::to('/regpost')}}" enctype="multipart/form-data">
                                 {{csrf_field()}}
-                                <div class="field"> <label>Tên hiển thị</label> 
-                                    <input class="form-control" type="text" name="user_name" placeholder="Nhập tên hiển thị"> 
+                                <div class="field"> <label>Tên hiển thị</label>
+                                    <input class="form-control" type="text" name="user_name" placeholder="Nhập tên hiển thị">
                                 </div>
-                                <div class="field"> <label>Email</label> 
-                                    <input class="form-control" type="text" name="user_email" placeholder="Nhập email vnnews"> 
+                                <div class="field"> <label>Email</label>
+                                    <input class="form-control" type="text" name="user_email" placeholder="Nhập email vnnews">
                                 </div>
-                                <div class="field"> <label>Mật khẩu</label> 
-                                    <input class="form-control" type="password" name="user_pass" placeholder="Nhập mật khẩu vnnews"> 
-                                </div>   
+                                <div class="field"> <label>Mật khẩu</label>
+                                    <input class="form-control" type="password" name="user_pass" placeholder="Nhập mật khẩu vnnews">
+                                </div>
                                 <div class="row px-3 mb-4">
                                     <div class="custom-control custom-checkbox custom-control-inline"> <input id="chk1" type="checkbox" name="chk" class="custom-control-input"> <label for="chk1" class="custom-control-label text-sm">Thỏa thuận</label> </div> <a href="#" class="ml-auto mb-0 text-sm">Quên mật khẩu?</a>
                                 </div>
-                                
+
                                 <div class="row mb-3 px-3"> <button type="submit" class="ui primary submit button w-100">Đăng ký</button> </div>
-                                
+
                                 <div class="ui error message"></div>
                                 <script async custom-element="amp-auto-ads"
                                         src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
@@ -494,7 +688,7 @@
                                         }
                                         ]
                                     },
-                                    user_passres: { 
+                                    user_passres: {
                                         identifier: 'user_passres',
                                         rules: [
                                         {
@@ -538,5 +732,6 @@
     </div>
 </div>
 </div>
+<script src="./assets/js/favourite.js"></script>
 @endforeach
 @endsection

@@ -17,7 +17,7 @@ Author URL: http://w3layouts.com
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet">
 
     <!-- Template CSS -->
-    
+
     <script src="Semantic-UI-CSS-master/jquery-3.4.1.min.js"></script>
     <link rel="stylesheet"  href="Semantic-UI-CSS-master/semantic.min.css">
     <script src="Semantic-UI-CSS-master/semantic.min.js"></script>
@@ -36,7 +36,7 @@ Author URL: http://w3layouts.com
             <div class="container">
                 <a class="navbar-brand" href="/vnnews">
                     <span class="fa fa-edit"></span> vnnews</a>
-                <!-- if logo is image enable this   
+                <!-- if logo is image enable this
 						<a class="navbar-brand" href="#index.html">
 							<img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
 						</a> -->
@@ -53,11 +53,11 @@ Author URL: http://w3layouts.com
                         @foreach($category as $key => $cate)
                             <li class="nav-item @@contact__active">
                                 <a class="nav-link" href="{{URL::to('/searchcate-'.$cate->category_id)}}">{{$cate->category_name}}</a>
-                            </li>   
+                            </li>
                         @endforeach
                         <li class="nav-item dropdown @@category__active">
                             <a class="nav-link" href="/vnnews/allnews">
-                                Tất cả 
+                                Tất cả
                             </a>
                         </li>
                     </ul>
@@ -83,7 +83,11 @@ Author URL: http://w3layouts.com
                     @if(session('user_email') == true)
                         <div class="header-author d-flex ml-lg-4 pl-2 mt-lg-0 mt-3">
                             <a class="img-circle img-circle-sm" href="author.html">
-                                <img src="{{session('user_avatar')}}" class="img-fluid" alt="...">
+                                @if(session('user_avatar') != null)
+                                  <img src="{{session('user_avatar')}}" class="img-fluid" alt="...">
+                                @else
+                                  <img src="./assets/images/nennen.png" class="img-fluid" alt="...">
+                                @endif
                             </a>
                             <div class="align-self ml-3">
                                 <a href="author.html"><h5>{{session('user_name')}}</h5></a>
@@ -92,41 +96,14 @@ Author URL: http://w3layouts.com
                                         <div class="text">Tài khoản</div>
                                         <i class="dropdown icon"></i>
                                         <div class="menu">
-                                            <div class="item"><i class="fa fa-heart text-danger">&nbsp;</i>Tin yêu thích</div>
                                             <div class="item">
-                                            <span class="description">ctrl + o</span>
-                                            Open...
+                                              <a href="/vnnews/all-favourite"><i class="fa fa-heart text-danger">&nbsp;</i>Tin yêu thích</a>
                                             </div>
                                             <div class="item">
-                                            <span class="description">ctrl + s</span>
-                                            Save as...
+                                              <a href="/vnnews/all-comment"><i class="comments icon text-dark">&nbsp;</i>Bình luận của bạn</a>
                                             </div>
                                             <div class="item">
-                                            <span class="description">ctrl + r</span>
-                                            Rename
-                                            </div>
-                                            <div class="item">Make a copy</div>
-                                            <div class="item">
-                                            <i class="folder icon"></i>
-                                            Move to folder
-                                            </div>
-                                            <div class="item">
-                                            <i class="trash icon"></i>
-                                            Move to trash
-                                            </div>
-                                            <div class="divider"></div>
-                                            <div class="item">Download As...</div>
-                                            <div class="item">
-                                            <i class="dropdown icon"></i>
-                                            Publish To Web
-                                            <div class="menu">
-                                                <div class="item">Google Docs</div>
-                                                <div class="item">Google Drive</div>
-                                                <div class="item">Dropbox</div>
-                                                <div class="item">Adobe Creative Cloud</div>
-                                                <div class="item">Private FTP</div>
-                                                <div class="item">Another Service...</div>
-                                            </div>
+                                              <a href="/vnnews/user-setting"><i class="user icon text-success">&nbsp;</i>Cài đặt hồ sơ</a>
                                             </div>
                                             <div class="item"><a href="/vnnews/logout"><i class="fa fa-sign-out">&nbsp;</i>Đăng xuất</a></div>
                                         </div>
@@ -210,6 +187,7 @@ Author URL: http://w3layouts.com
                                     </div>
                                 @endforeach
                             </div>
+                          
                         </div>
                         <div class="col-lg-7 col-md-6 mt-md-0 mt-5">
                             <div class="list-view list-view1">
@@ -300,7 +278,7 @@ Author URL: http://w3layouts.com
                                             {{$newshotview->news_name}}
                                         </a>
                                         <div class="author align-items-center mt-3 mb-1">
-                                            
+
                                         </div>
                                         <ul class="blog-meta">
                                             <li class="meta-item blog-students">
@@ -324,7 +302,7 @@ Author URL: http://w3layouts.com
                                             {{$newshotlike->news_name}}
                                         </a>
                                         <div class="author align-items-center mt-3 mb-1">
-                                            
+
                                         </div>
                                         <ul class="blog-meta">
                                             <li class="meta-item blog-students">
@@ -376,7 +354,7 @@ Author URL: http://w3layouts.com
                                         alt="" class="img-fluid radius-image news-image"></a>
                             </div>
                         @endforeach
-                        
+
                         <div class="row most-recent-inner my-5 py-lg-4">
                             <div class="col-md-6">
                                 <div class="list-view list-view1">
@@ -480,12 +458,12 @@ Author URL: http://w3layouts.com
                             <div class="grids5-info">
                             <h4></h4>
                                 <div class="blog-info">
-                                    <a href="#blog-single" class="blog-desc1"> 
+                                    <a href="#blog-single" class="blog-desc1">
                                         <img src="assets/images/{{$cateall->category_img}}" style="width: 100%; height: 100px;"/>
                                         <br>
                                         <br>
                                         <center>
-                                        {{$cateall->category_name}} 
+                                        {{$cateall->category_name}}
                                         </center>
                                     </a>
                                 </div>
@@ -504,7 +482,7 @@ Author URL: http://w3layouts.com
 
         </div>
     </div>
-    
+
     <!-- footer -->
     <footer class="w3l-footer-16">
         <div class="footer-content py-lg-5 py-4 text-center">
@@ -558,16 +536,16 @@ Author URL: http://w3layouts.com
                                 <h4 class="text-danger text-center">Đăng nhập bằng email</h3>
                                 <form class="ui form" role="form" method="post" action="{{URL::to('/loginpost')}}">
                                     {{csrf_field()}}
-                                    <div class="field"> <label>Email</label> 
-                                        <input class="form-control" type="text" name="user_email" placeholder="Nhập email vnnews"> 
+                                    <div class="field"> <label>Email</label>
+                                        <input class="form-control" type="text" name="user_email" placeholder="Nhập email vnnews">
                                     </div>
-                                    <div class="field"> <label>Mật khẩu</label> 
-                                        <input class="" type="text" name="user_pass" placeholder="Nhập mật khẩu vnnews"> 
+                                    <div class="field"> <label>Mật khẩu</label>
+                                        <input class="" type="text" name="user_pass" placeholder="Nhập mật khẩu vnnews">
                                     </div>
                                     <div class="row px-3 mb-4">
                                         <div class="custom-control custom-checkbox custom-control-inline"> <input id="chk1" type="checkbox" name="chk" class="custom-control-input"> <label for="chk1" class="custom-control-label text-sm">Nhớ mật khẩu</label> </div> <a href="#" class="ml-auto mb-0 text-sm">Quên mật khẩu?</a>
                                     </div>
-                                    
+
                                     <div class="row mb-3 px-3"> <button type="submit" class="ui primary submit button w-100">Đăng nhập</button> </div>
                                     <div class="ui error message"></div>
                                 </form>
@@ -623,21 +601,21 @@ Author URL: http://w3layouts.com
                                 <h4 class="text-danger text-center">Đăng ký bằng email</h3>
                                 <form class="ui form" role="form" method="post" action="{{URL::to('/regpost')}}" enctype="multipart/form-data">
                                     {{csrf_field()}}
-                                    <div class="field"> <label>Tên hiển thị</label> 
-                                        <input class="form-control" type="text" name="user_name" placeholder="Nhập tên hiển thị"> 
+                                    <div class="field"> <label>Tên hiển thị</label>
+                                        <input class="form-control" type="text" name="user_name" placeholder="Nhập tên hiển thị">
                                     </div>
-                                    <div class="field"> <label>Email</label> 
-                                        <input class="form-control" type="text" name="user_email" placeholder="Nhập email vnnews"> 
+                                    <div class="field"> <label>Email</label>
+                                        <input class="form-control" type="text" name="user_email" placeholder="Nhập email vnnews">
                                     </div>
-                                    <div class="field"> <label>Mật khẩu</label> 
-                                        <input class="form-control" type="password" name="user_pass" placeholder="Nhập mật khẩu vnnews"> 
-                                    </div>   
+                                    <div class="field"> <label>Mật khẩu</label>
+                                        <input class="form-control" type="password" name="user_pass" placeholder="Nhập mật khẩu vnnews">
+                                    </div>
                                     <div class="row px-3 mb-4">
                                         <div class="custom-control custom-checkbox custom-control-inline"> <input id="chk1" type="checkbox" name="chk" class="custom-control-input"> <label for="chk1" class="custom-control-label text-sm">Thỏa thuận</label> </div> <a href="#" class="ml-auto mb-0 text-sm">Quên mật khẩu?</a>
                                     </div>
-                                    
+
                                     <div class="row mb-3 px-3"> <button type="submit" class="ui primary submit button w-100">Đăng ký</button> </div>
-                                    
+
                                     <div class="ui error message"></div>
                                     <script async custom-element="amp-auto-ads"
                                             src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
@@ -700,7 +678,7 @@ Author URL: http://w3layouts.com
                                             }
                                             ]
                                         },
-                                        user_passres: { 
+                                        user_passres: {
                                             identifier: 'user_passres',
                                             rules: [
                                             {

@@ -16,10 +16,20 @@ session_start();
 
 class AdminController extends Controller
 {
+
+    //Index
+    public function indexAdmin()
+    {
+        return view('admin.view.home');
+    }
     //News
     public function IndexNews()
     {
-        $news = DB::table('news')->where('news_active','1')->orderByDesc('news_datecreate')->get();
+        $news = DB::table('news')
+        ->join('category','news.category_id','category.category_id')
+        ->where('news_active','1')
+        ->where('news_del', 1)
+        ->orderByDesc('news_datecreate')->get();
         return view('admin.view.viewnews')->with('news',$news);
     }
     public function AddNews()
@@ -54,7 +64,7 @@ class AdminController extends Controller
 
         //auto
         $data['news_active'] = true;
-        $data['news_del'] = true;
+        $data['news_del'] = false;
 
 
         DB::table('news')->insert($data);
@@ -91,10 +101,63 @@ class AdminController extends Controller
 
         $data['category_datecreate'] = $now;
         $data['category_activitie'] = true;
-        $data['category_del'] = true;
+        $data['category_del'] = 1;
 
         DB::table('category')->insert($data);
         return Redirect::to('indexcategory');
 
+    }
+    //sua tin tuc
+    public function editNews($id)
+    {
+        $cate = DB::table('category')->where('category_activitie','1')->orderByDesc('category_view')->get();
+
+        //xem chi tiet
+        $detail = DB::table('news')
+        ->join('category','news.category_id','category.category_id')
+        ->where('news.news_id',$id)
+        ->get();
+
+        return view('admin.edit.editnews')
+        ->with('detail',$detail)
+        ->with('category',$cate);
+    }
+    public function editNewsPost(AddNewsRequest $request)
+    {
+
+        if($request->editnews_post == null)
+        {
+            $data = array();
+            $data['news_name'] = $request->news_name;
+            $data['news_view'] = $request->news_view;
+            $data['news_like'] = $request->news_like;
+            $data['news_content'] = $request->news_content;
+
+            DB::table('news')->where('news_id',$request->news_id)->update($data);
+            return Redirect::to('indexnews');
+        }
+        else {
+
+            $data = array();
+
+            //images
+            $get_img = $request->file('news_imgedit');
+
+            $get_name_img = $get_img->getClientOriginalName();
+            $name_img = current(explode('.', $get_name_img));
+            $new_img = $name_img.rand(0,99).'.'.$get_img->getClientOriginalExtension();
+            $get_img->move('assets/images', $new_img);
+
+            $data['news_img'] = $new_img;
+
+            $data['news_name'] = $request->news_name;
+            $data['news_view'] = $request->news_view;
+            $data['news_like'] = $request->news_like;
+            $data['news_content'] = $request->news_content;
+
+            DB::table('news')->where('news_id',$request->news_id)->update($data);
+
+            return Redirect::to('indexnews');
+        }
     }
 }
