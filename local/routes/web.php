@@ -81,12 +81,17 @@ Route::get('all-comment', [ViewControler::class, 'ViewComment']);
 //Binh luan
 Route::post('/comment-id', [UserConttroller::class, 'commentID']);
 
-//Cai day user
+//Cai dat user
 Route::get('user-setting', [ViewControler::class, 'userSetting']);
 
 //editor
 Route::get('/editor', [ViewControler::class, 'editor']);
+Route::post('/post-editor', [UserConttroller::class, 'editorPost']);
 
+//Sua editor
+Route::post('/editor-edit-e', [UserConttroller::class, 'editorEditE']);
+//Xoa editor
+Route::get('/editor-edit-del-{id}', [UserConttroller::class, 'editorDelE']);
 
 //ADMin
 Route::get('/indexadmin', [AdminController::class, 'indexAdmin']);
@@ -100,7 +105,16 @@ Route::get('/del-news-{id}', [SubmitControler::class, 'delNewsID']);
 Route::get('/editnews-{id}', [AdminController::class, 'editNews']);
 Route::post('/editnews-post', [AdminController::class, 'editNewsPost']);
 
+//editor ADMin
+Route::get('/editor-admin', [AdminController::class, 'IndexEditor']);
 //News
 Route::get('/news-admin', [AjaxController::class, 'ajaxNews']);
 Route::get('/news-all-admin', [AjaxController::class, 'ajaxAllNews']);
+//editor ajax
 Route::get('/news-notactive-admin', [AjaxController::class, 'ajaxNotActiveNews']);
+//editor
+Route::get('/check-editor-zero', [AjaxController::class, 'IndexEditorzero']);
+Route::get('/check-editor-two', [AjaxController::class, 'IndexEditortwo']);
+Route::get('/check-editor-one', [AjaxController::class, 'IndexEditorone']);
+//duyet
+Route::get('/check-editor-{id}', [AdminController::class, 'checkEditor']);

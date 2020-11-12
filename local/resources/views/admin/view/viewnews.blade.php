@@ -1,5 +1,4 @@
 @extends('layout.layoutadmin')
-
 @section('content')
 <script src="Semantic-UI-CSS-master/jquery-3.4.1.min.js"></script>
 <script src="assetsadmin/js/jquery.unobtrusive-ajax.min.js"></script>

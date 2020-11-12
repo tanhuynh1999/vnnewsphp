@@ -200,6 +200,12 @@ class ViewControler extends Controller
         ->get()
         ->count();
 
+        $counteditor = DB::table('editor')
+        ->where('user_id', session('user_email'))
+        ->get()
+        ->count();
+        session()->put('counteditor', $counteditor);
+
         session()->put('countcomment', $countcomment);
 
         return view('view.viewfavourite')
@@ -232,6 +238,12 @@ class ViewControler extends Controller
         ->where('user_id',session('user_email'))
         ->get();
 
+        $counteditor = DB::table('editor')
+        ->where('user_id', session('user_email'))
+        ->get()
+        ->count();
+        session()->put('counteditor', $counteditor);
+
         return view('view.viewcomment')
         ->with('category',$cate)
         ->with('detail',$detail);
@@ -257,6 +269,12 @@ class ViewControler extends Controller
           $detail = DB::table('users')
           ->where('user_email',session('user_email'))
           ->get();
+
+          $counteditor = DB::table('editor')
+          ->where('user_id', session('user_email'))
+          ->get()
+          ->count();
+          session()->put('counteditor', $counteditor);
 
           session()->put('countcomment', $countcomment);
           return view('view.settinguser')
@@ -285,10 +303,27 @@ class ViewControler extends Controller
         ->where('user_email',session('user_email'))
         ->get();
 
+        $counteditor = DB::table('editor')
+        ->where('user_id', session('user_email'))
+        ->get()
+        ->count();
+        session()->put('counteditor', $counteditor);
+
         session()->put('countcomment', $countcomment);
+
+
+        $detaileditor = DB::table('editor')
+        ->where('user_id',session('user_email'))
+        ->get();
+
+        $detaileditortwo = DB::table('editor')
+        ->where('user_id',session('user_email'))
+        ->get();
 
         return view('view.editor')
         ->with('category',$cate)
-        ->with('detail',$detail);
+        ->with('detail',$detail)
+        ->with('detaileditor', $detaileditor)
+        ->with('detaileditortwo', $detaileditortwo);
     }
 }

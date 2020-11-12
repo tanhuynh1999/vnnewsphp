@@ -38,4 +38,65 @@ class AjaxController extends Controller
 
         return view('admin.ajax.news')->with('news',$news);
     }
+
+    //editor
+    public function IndexEditorzero()
+    {
+      $editor = DB::table('editor')
+      ->join('users','editor.user_id','users.user_email')
+      ->where('editor_change', '0')
+      ->orderByDesc('editor_datecreate')->get();
+
+      //dem
+      $counteditor = DB::table('editor')
+      ->where('editor_change', '0')
+      ->orderByDesc('editor_datecreate')->get()->count();
+
+      session()->put('counteditor',$counteditor);
+
+
+
+
+      return view('admin.ajax.editor')->with('editor',$editor);
+    }
+
+    public function IndexEditortwo()
+    {
+      $editor = DB::table('editor')
+      ->join('users','editor.user_id','users.user_email')
+      ->where('editor_change', '2')
+      ->orderByDesc('editor_datecreate')->get();
+
+      //dem
+      $counteditor = DB::table('editor')
+      ->where('editor_change', '2')
+      ->orderByDesc('editor_datecreate')->get()->count();
+
+      session()->put('counteditor',$counteditor);
+
+
+
+
+      return view('admin.ajax.editor')->with('editor',$editor);
+    }
+
+    public function IndexEditorone()
+    {
+      $editor = DB::table('editor')
+      ->join('users','editor.user_id','users.user_email')
+      ->where('editor_change', '1')
+      ->orderByDesc('editor_datecreate')->get();
+
+      //dem
+      $counteditor = DB::table('editor')
+      ->where('editor_change', '1')
+      ->orderByDesc('editor_datecreate')->get()->count();
+
+      session()->put('counteditor',$counteditor);
+
+
+
+
+      return view('admin.ajax.editor')->with('editor',$editor);
+    }
 }

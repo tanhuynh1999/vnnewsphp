@@ -355,15 +355,132 @@ Author URL: http://w3layouts.com
                                             }
                                             ]
                                         },
-                                        terms: {
-                                            identifier: 'terms',
+                                        editor_fullname: {
+                                            identifier  : 'editor_fullname',
                                             rules: [
-                                            {
-                                                type   : 'checked',
-                                                prompt : 'You must agree to the terms and conditions'
-                                            }
+                                              {
+                                                type   : 'empty',
+                                                prompt : 'Họ tên không được để trống'
+                                              },
+                                              {
+                                                type   : 'minLength[5]',
+                                                prompt : 'Họ tên phải trên 5 ký tự'
+                                              }
                                             ]
-                                        }
+                                          },
+                                        editor_fb: {
+                                            identifier  : 'editor_fb',
+                                            rules: [
+                                              {
+                                                type   : 'regExp[/(?:http:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-]*)/]',
+                                                prompt : 'Phải là link facebook'
+                                              }
+                                            ]
+                                          },
+                                        editor_fb: {
+                                            identifier  : 'editor_fb',
+                                            rules: [
+                                              {
+                                                type   : 'regExp[/(?:http:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-]*)/]',
+                                                prompt : 'Phải là link facebook'
+                                              },
+                                              {
+                                                type   : 'empty',
+                                                prompt : 'Link facebook không để trống'
+                                              }
+                                            ]
+                                          },
+                                          editor_phone: {
+                                              identifier: 'editor_phone',
+                                              rules: [
+                                              {
+                                                  type   : 'number',
+                                                  prompt : 'Số điện thoại không hợp lệ'
+                                              },
+                                              {
+                                                  type   : 'empty',
+                                                  prompt : 'Số điện thoại không để trống'
+                                              }
+                                              ]
+                                          },
+                                          editor_email: {
+                                              identifier  : 'editor_email',
+                                              rules: [
+                                                {
+                                                  type   : 'email',
+                                                  prompt : 'Email không đúng định dạng'
+                                                },
+                                                {
+                                                  type   : 'empty',
+                                                  prompt : 'Email không được bỏ trống'
+                                                }
+                                              ]
+                                            },
+                                            editor_time: {
+                                                identifier  : 'editor_time',
+                                                rules: [
+                                                  {
+                                                    type   : 'empty',
+                                                    prompt : 'Thời gian rảnh không bỏ trống'
+                                                  },
+                                                  {
+                                                    type   : 'minLength[10]',
+                                                    prompt : 'Nội dung thời gian rảnh phải trên 10 ký tự'
+                                                  }
+                                                ]
+                                              },
+                                              editor_introduce: {
+                                                  identifier  : 'editor_introduce',
+                                                  rules: [
+                                                    {
+                                                      type   : 'empty',
+                                                      prompt : 'Giới thiệu bản thân không bỏ trống'
+                                                    },
+                                                    {
+                                                      type   : 'minLength[10]',
+                                                      prompt : 'Nội dung giới thiệu bản thân phải trên 10 ký tự'
+                                                    }
+                                                  ]
+                                                },
+                                                editor_interests: {
+                                                    identifier  : 'editor_interests',
+                                                    rules: [
+                                                      {
+                                                        type   : 'empty',
+                                                        prompt : 'Sở thích không bỏ trống'
+                                                      },
+                                                      {
+                                                        type   : 'minLength[10]',
+                                                        prompt : 'Nội dung sở thích phải trên 10 ký tự'
+                                                      }
+                                                    ]
+                                                  },
+                                                  editor_commitment: {
+                                                      identifier  : 'editor_commitment',
+                                                      rules: [
+                                                        {
+                                                          type   : 'empty',
+                                                          prompt : 'Cam kết không bỏ trống'
+                                                        },
+                                                        {
+                                                          type   : 'minLength[10]',
+                                                          prompt : 'Nội dung cam kết phải trên 10 ký tự'
+                                                        }
+                                                      ]
+                                                    },
+                                                    editor_enthusiasm: {
+                                                        identifier  : 'editor_enthusiasm',
+                                                        rules: [
+                                                          {
+                                                            type   : 'empty',
+                                                            prompt : 'Cam kết không bỏ trống'
+                                                          },
+                                                          {
+                                                            type   : 'minLength[10]',
+                                                            prompt : 'Nội dung cam kết phải trên 10 ký tự'
+                                                          }
+                                                        ]
+                                                      }
                                         }
                                     });
                                 </script>

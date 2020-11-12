@@ -120,7 +120,7 @@ class UserConttroller extends Controller
             //date
             $date = new Carbon();
             $now = Carbon::now();
-            
+
             $data['user_datelogin'] = $now;
 
             DB::table('users')->insert($data);
@@ -244,5 +244,66 @@ class UserConttroller extends Controller
         DB::table('comment')->insert($data);
 
         return Redirect::to('/detailnews-' .$request->news_id);
+    }
+
+    //them editorPost
+    public function editorPost(AddUserRequest $request)
+    {
+        $data = array();
+        $data['editor_fullname'] = $request->editor_fullname;
+        $data['editor_sex'] = $request->editor_sex;
+        $data['editor_fb'] = $request->editor_fb;
+        $data['editor_phone'] = $request->editor_phone;
+        $data['editor_email'] = $request->editor_email;
+        $data['editor_time'] = $request->editor_time;
+        $data['editor_introduce']  = $request->editor_introduce;
+        $data['editor_interests'] = $request->editor_interests;
+        $data['editor_commitment'] = $request->editor_commitment;
+        $data['editor_enthusiasm'] = $request->editor_enthusiasm;
+        $data['user_id'] = $request->user_id;
+        $data['editor_change'] = 2;
+
+        //date
+        $date = new Carbon();
+        $now = Carbon::now();
+
+        $data['editor_datecreate'] = $now;
+        $data['editor_dateupdate'] = $now;
+
+        DB::table('editor')->insert($data);
+        return Redirect::to('/editor');
+    }
+    //sua editorost
+    public function editorEditE(AddUserRequest $request)
+    {
+      $data = array();
+      $data['editor_fullname'] = $request->editor_fullname;
+      $data['editor_sex'] = $request->editor_sex;
+      $data['editor_fb'] = $request->editor_fb;
+      $data['editor_phone'] = $request->editor_phone;
+      $data['editor_email'] = $request->editor_email;
+      $data['editor_time'] = $request->editor_time;
+      $data['editor_introduce']  = $request->editor_introduce;
+      $data['editor_interests'] = $request->editor_interests;
+      $data['editor_commitment'] = $request->editor_commitment;
+      $data['editor_enthusiasm'] = $request->editor_enthusiasm;
+      $data['editor_change'] = 2;
+
+      //date
+      $date = new Carbon();
+      $now = Carbon::now();
+
+      $data['editor_dateupdate'] = $now;
+
+      DB::table('editor')->where('editor_id',$request->editor_id)->update($data);
+      return Redirect::to('/editor');
+    }
+    //xoa editor
+    public function editorDelE($id)
+    {
+
+      DB::table('editor')->where('editor_id', $id)->delete();
+
+      return Redirect::to('/editor');
     }
 }

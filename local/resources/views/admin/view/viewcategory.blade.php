@@ -72,11 +72,31 @@
                           @endif
                       </td>
                       <td>
-                          <i class="fas fa-eye"></i>
+                          <i class="fas fa-newspaper"></i>
                           <i class="fas fa-edit"></i>
-                          <i class="fas fa-trash-alt"></i>
+                          <a href="" class="text-red" data-toggle="modal" data-target="#de{{$row->category_id}}"><i class="fas fa-trash-alt"></i></a>
                       </td>
                   </tr>
+                  <!-- Xóa -->
+                    <div class="modal fade" id="de{{$row->category_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Xóa danh muc "{{$row->category_name}}"</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            Chọn thao tác và thực hiện.
+                        </div>
+                        <div class="modal-footer">
+                          <button onclick="window.location.href='/vnnews/del-news-de{{$row->category_id}}'" type="button" class="btn btn-default">Chuyển vào thùng rác</button>
+                          <button onclick="window.location.href='/vnnews/delete-news-de{{$row->category_id}}'" type="button" class="btn btn-danger">Xóa vĩnh viển</button>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
               @endforeach
           </tbody>
       </table>

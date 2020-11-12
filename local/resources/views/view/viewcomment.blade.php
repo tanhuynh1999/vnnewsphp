@@ -43,7 +43,11 @@
                                 <i class="cogs icon"></i>Cài đặt tài khoản
                               </button>
                               <button onclick="window.location.href='/vnnews/editor'" type="button" class="list-group-item list-group-item-action">
-                                <i class="edit icon"></i>Đăng ký làm biên tập viên
+                                @if(session('counteditor') != 0)
+                                  <i class="edit icon"></i>Biên tập viên
+                                @else
+                                  <i class="edit icon"></i>Đăng ký làm biên tập viên
+                                @endif
                               </button>
                             </div>
                         </div>

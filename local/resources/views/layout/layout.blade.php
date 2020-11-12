@@ -187,7 +187,7 @@ Author URL: http://w3layouts.com
                                     </div>
                                 @endforeach
                             </div>
-                          
+
                         </div>
                         <div class="col-lg-7 col-md-6 mt-md-0 mt-5">
                             <div class="list-view list-view1">

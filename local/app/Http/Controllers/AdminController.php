@@ -160,4 +160,33 @@ class AdminController extends Controller
             return Redirect::to('indexnews');
         }
     }
+
+    public function IndexEditor()
+    {
+      $editor = DB::table('editor')
+      ->join('users','editor.user_id','users.user_email')
+      ->where('editor_change', '2')
+      ->orderByDesc('editor_datecreate')->get();
+
+      //dem
+      $counteditor = DB::table('editor')
+      ->where('editor_change', '2')
+      ->orderByDesc('editor_datecreate')->get()->count();
+
+      session()->put('counteditor',$counteditor);
+
+
+
+
+      return view('admin.view.editor')->with('editor',$editor);
+    }
+    public function checkEditor($id)
+    {
+        $data = array();
+        $data['editor_change'] = 0;
+
+
+        DB::table('editor')->where('editor_id', $id)->update($data);
+        return Redirect::to('editor-admin');
+    }
 }
